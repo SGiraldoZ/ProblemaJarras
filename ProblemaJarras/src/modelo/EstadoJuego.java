@@ -79,7 +79,7 @@ public class EstadoJuego implements Estado<EstadoJuego>{
     }
 	
 	@Override
-	public boolean isSolucion() {
+	public boolean isSolucion(){
 		return this.juego.estadoIsSolucion(this);
 	}
 	

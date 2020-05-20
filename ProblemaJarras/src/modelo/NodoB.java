@@ -75,7 +75,7 @@ public class NodoB<E> {
 	public String toString() {
 		String HI = (hijoIzq == null) ? "null" : hijoIzq.getLlave().toString();
 		String HD = (hijoDer == null) ? "null" : hijoDer.getLlave().toString();
-		return ((Comparable<E>) llave).toString() + "(" + HI + "," + HD+ ")";
+		return (llave).toString() + "(" + HI + "," + HD+ ")";
 	}
 
 }

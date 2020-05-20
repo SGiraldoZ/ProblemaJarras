@@ -3,6 +3,12 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+class ExcepcionNodo extends Exception{
+	public ExcepcionNodo(String s) {
+		super(s);
+	}
+}
+
 public class ArbolB<E> {
 
 	protected NodoB<E> raiz;
@@ -84,6 +90,62 @@ public class ArbolB<E> {
 			System.out.print(r.getLlave()+ " ");
 		}	
 	}
+	
+	
+	//EMPIEZAN MÉTODOS MAFIOLY SIN REVISAR
+	public boolean nodoRepetido(E llave, NodoB<E> nodo) throws ExcepcionNodo  {
+		boolean a= false, b = false;
+		
+		NodoB<E> nodopadre = nodo.getPadre();
+		if (nodopadre!=null) {
+			if (nodopadre.getLlave().equals(llave)) {
+				return true;
+			}
+			if (esHijoIzquierdo(nodopadre,nodo)) {
+				if (nodopadre.getHijoDer()!=null) {
+					a = buscaEnNodo(llave, nodopadre.getHijoDer());
+				} 
+			} else  if (nodopadre.getHijoIzq()!=null){
+				b = buscaEnNodo(llave,nodopadre.getHijoIzq());
+
+			}
+			if (a||b) {
+				return true;
+			} else {
+				nodoRepetido(llave,nodo.getPadre());
+			}
+
+		} return false;
+	}
+
+	private boolean buscaEnNodo(E llave, NodoB<E> nodo) {
+		boolean a = false,b = false;
+		if (nodo.getLlave()==llave) {
+			return true;
+		} else if (tieneHijos(nodo)){
+			if (nodo.getHijoIzq()!=null) {
+				a = buscaEnNodo( llave, nodo.getHijoIzq());
+			}
+			if (nodo.getHijoDer()!=null) {
+				b = buscaEnNodo( llave, nodo.getHijoDer());
+			}
+		}
+		return (a||b);
+	}
+	
+	public boolean tieneHijos(NodoB<E> nodo) {
+		if (nodo.getHijoDer()!=null || nodo.getHijoIzq()!= null) {
+			return true;
+		} else return false;
+	}
+	
+	public boolean esHijoIzquierdo(NodoB<E> padre, NodoB<E> Hijo) {
+		if (padre.getHijoIzq().getLlave().equals(Hijo.getLlave())) {
+			return true;
+		} else { return false;
+		}
+	}
+	//TERMINAN MÉTODOS MAFIOLY
 	
 	public ArbolB(NodoB<E> raiz) {
 		super();

@@ -27,10 +27,8 @@ public class Juego {
 		
 	}
 
-	public boolean estadoIsSolucion(EstadoJuego ej) throws ExcepcionJarra {
-		if (jarraA==null || jarraB ==null) {
-			throw new ExcepcionJarra("Jarra no existe");
-		}
+	public boolean estadoIsSolucion(EstadoJuego ej){
+		
 		int cant = (ObjA)? ej.getLevelA(): ej.getLevelB();
 		return cant == cantObj;
 		
