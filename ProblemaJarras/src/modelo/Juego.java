@@ -1,10 +1,16 @@
 package modelo;
 
+class ExcepcionJarra extends Exception{
+	public ExcepcionJarra(String s) {
+		super(s);
+	}
+}
+
 public class Juego {
 	private Jarra jarraA;
 	private Jarra jarraB;
-	private int cantObj;
-	private boolean ObjA; 
+	private int cantObj;//La cantidad que queremos al final en la jarra objetivo
+	private boolean ObjA; //Un booleano que marca si la jarra objetivo es la A
 	
 	public Juego(int limJarraA, int limJarraB, int cantObj, boolean ObjA) {
 		jarraA = new Jarra(limJarraA);
@@ -21,8 +27,13 @@ public class Juego {
 		
 	}
 
-	public boolean estadoIsSolucion(EstadoJuego ej) {
-		return false;
+	public boolean estadoIsSolucion(EstadoJuego ej) throws ExcepcionJarra {
+		if (jarraA==null || jarraB ==null) {
+			throw new ExcepcionJarra("Jarra no existe");
+		}
+		int cant = (ObjA)? ej.getLevelA(): ej.getLevelB();
+		return cant == cantObj;
+		
 	}
 	
 	/**
