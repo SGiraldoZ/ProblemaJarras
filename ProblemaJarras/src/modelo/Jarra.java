@@ -8,15 +8,7 @@ public class Jarra {
 	}
 	
 	public int cantMax(int tiene){
-		if (tiene==0) {
-			return lim;
-		}else{
-			if (tiene==lim) {
-				return 0;
-			}else {
-				return lim-tiene;
-			}
-		}
+		return lim - tiene;
 		
 	}
 
@@ -27,5 +19,16 @@ public class Jarra {
 		return lim;
 	}
 
+	
+	public static void main(String[] args) {
+		Jarra j = new Jarra(3);
+		
+		System.out.println(j.cantMax(2));
+	}
+	
+	@Override
+	public String toString() {
+		return "J"+this.lim;
+	}
 	
 }

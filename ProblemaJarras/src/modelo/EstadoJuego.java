@@ -83,6 +83,7 @@ public class EstadoJuego implements Estado<EstadoJuego>{
 		return this.juego.estadoIsSolucion(this);
 	}
 	
+	@Override
 	public boolean equals(EstadoJuego ej) {
 		return (this.juego.equals(ej.getJuego()) && this.levelA == ej.getLevelA() && this.levelB == ej.getLevelB());
 	}
@@ -108,5 +109,11 @@ public class EstadoJuego implements Estado<EstadoJuego>{
 		return juego;
 	}
 	
+	@Override
+	public String toString() {
+		String jA = this.juego.getJarraA().toString(),
+				jB = this.juego.getJarraB().toString();
+		return jA+"-"+this.levelA+";"+jB+"-"+this.levelB;
+	}
 	
 }

@@ -11,21 +11,21 @@ public class Juego {
 	private Jarra jarraB;
 	private int cantObj;//La cantidad que queremos al final en la jarra objetivo
 	private boolean ObjA; //Un booleano que marca si la jarra objetivo es la A
+	private ArbolEstados<EstadoJuego> arbolEstados;	
 	
 	public Juego(int limJarraA, int limJarraB, int cantObj, boolean ObjA) {
 		jarraA = new Jarra(limJarraA);
 		jarraB = new Jarra(limJarraB);
 		this.cantObj = cantObj;
 		this.ObjA = ObjA;
+		this.arbolEstados = new ArbolEstados<EstadoJuego>(estadoInicial());
 	}
 	
 	public EstadoJuego estadoInicial() {
 		return new EstadoJuego(0, 0,this);
 	}
 	
-	public static void main(String[] args) {
-		
-	}
+	
 
 	public boolean estadoIsSolucion(EstadoJuego ej){
 		
