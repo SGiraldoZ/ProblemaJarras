@@ -51,6 +51,7 @@ public class EstadoJuego implements Estado<EstadoJuego>{
 	@Override
 	public LinkedList<EstadoJuego> estadosPosibles() {
         LinkedList<EstadoJuego> lista = new LinkedList<EstadoJuego>();
+        if (this.isSolucion()) return null;
         EstadoJuego temp = llenarJarra(true);
         if(temp!=null) {
             lista.add(temp);

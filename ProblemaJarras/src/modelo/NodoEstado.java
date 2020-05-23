@@ -63,17 +63,21 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
     
     public static void main(String[] args){
     	NodoB<Integer> n1 = new NodoB<Integer>(1);
-    	Juego j =new Juego(5,3,2,false);
+    	Juego j =new Juego(4,3,2,false);
     	NodoEstado<EstadoJuego> ne = new NodoEstado<EstadoJuego>(new EstadoJuego(0,0, j));
     	
-    	ne.estadosSiguientes();
-    	ne.getHijoIzq().estadosSiguientes();
+//    	ne.estadosSiguientes();
+//    	ne.getHijoIzq().estadosSiguientes();
     	
     	ArbolEstados<EstadoJuego> a = new ArbolEstados(ne);
+    	a.FillUntilSolve();
     	a.inorden();
     	System.out.println("\n");
     	a.preorden(a.getRaiz());
+    	
+    	
   
+//    	System.out.println((new EstadoJuego(0,2,j).isSolucion()));
     	
     	
     	

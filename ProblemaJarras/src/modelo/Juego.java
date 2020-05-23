@@ -18,7 +18,7 @@ public class Juego {
 		jarraB = new Jarra(limJarraB);
 		this.cantObj = cantObj;
 		this.ObjA = ObjA;
-		this.arbolEstados = new ArbolEstados<EstadoJuego>(estadoInicial());
+		this.arbolEstados = new ArbolEstados<EstadoJuego>(this.estadoInicial());
 	}
 	
 	public EstadoJuego estadoInicial() {
