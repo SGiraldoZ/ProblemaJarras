@@ -13,6 +13,18 @@ public class ArbolEstados<E extends Estado<E>> extends ArbolB<E> {
 		super ((NodoB<E>)new NodoEstado(info));
 	}
 	
+	public void fill() {
+		this.fill((NodoEstado<E>)this.raiz);
+	}
+	
+	private void fill(NodoEstado<E> raiz) {
+		if (raiz == null) return;
+		raiz.estadosSiguientes();
+		fill(raiz.getHijoIzq());
+		fill(raiz.getHijoDer());
+		
+	}
+	
 	//METODOS MERY
 	public void FillUntilSolve() {
 		this.FillUntilSolve((NodoEstado<E>)this.raiz);
@@ -58,4 +70,10 @@ public class ArbolEstados<E extends Estado<E>> extends ArbolB<E> {
 		System.out.println();
 	}
 	//FIN METODOS MERY
+	
+	public static void main(String[] args) {
+		Juego j = new Juego(3,2,1,true);
+		j.getArbolEstados().fill();
+		j.getArbolEstados().preorden();
+	}
 }

@@ -14,6 +14,7 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
    
     public void estadosSiguientes(){
         LinkedList<E> estados = this.getLlave().estadosPosibles();
+        if (estados == null) return;
         Iterator<E> iter = estados.iterator();
         while(iter.hasNext()) {
             E aux = iter.next();

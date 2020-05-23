@@ -1,5 +1,10 @@
 package modelo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 class ExcepcionJarra extends Exception{
 	public ExcepcionJarra(String s) {
 		super(s);
@@ -60,6 +65,44 @@ public class Juego {
 	 */
 	public boolean isObjA() {
 		return ObjA;
+	}
+
+	
+	
+	public static void jugar(String limA, String limB, String cantObj, boolean objA) {
+		Juego j = new Juego(Integer.parseInt(limA),Integer.parseInt(limB),Integer.parseInt(cantObj), objA);
+		j.arbolEstados.FillUntilSolve();
+	}
+	
+	public static void jugar(int limA, int limB, int cantObj, boolean objA) {
+		Juego j = new Juego((limA),(limB),(cantObj), objA);
+		j.arbolEstados.FillUntilSolve();
+	}
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int limA, limB, cantObj;
+		boolean objA;
+		System.out.println("Tamaño jarra 1: ");
+		limA = s.nextInt();
+		
+		System.out.println("Tamaño jarra 2: ");
+		limB = s.nextInt();
+		
+		System.out.println("Cantidad objetivo: ");
+		cantObj = s.nextInt();
+		
+		System.out.println("Jarra en la que debe haber "+cantObj+"(1 o 2):");
+		objA = s.nextInt()==1;
+		
+		jugar(limA, limB, cantObj, objA);
+	}
+
+	/**
+	 * @return the arbolEstados
+	 */
+	public ArbolEstados<EstadoJuego> getArbolEstados() {
+		return arbolEstados;
 	}
 	
 }
