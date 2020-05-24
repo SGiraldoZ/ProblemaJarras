@@ -3,6 +3,8 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JPanel;
+
 class ExcepcionNodo extends Exception {
 	public ExcepcionNodo(String s) {
 		super(s);
@@ -108,10 +110,14 @@ public class ArbolB<E> {
 		this.raiz = raiz;
 	}
 
+	public JPanel panelArbol() {
+		return new ArbolExpresionGrafico(this);
+	}
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+ 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NodoB<Integer> n1 = new NodoB<Integer>(10);
 		NodoB<Integer> n2 = new NodoB<Integer>(7);

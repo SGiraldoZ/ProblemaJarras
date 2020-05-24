@@ -114,7 +114,8 @@ public class EstadoJuego implements Estado<EstadoJuego>{
 	public String toString() {
 		String jA = this.juego.getJarraA().toString(),
 				jB = this.juego.getJarraB().toString();
-		return jA+"-"+this.levelA+";"+jB+"-"+this.levelB;
+		return jA+"-"+this.levelA+" "+jB+"-"+this.levelB;
 	}
 	
+
 }

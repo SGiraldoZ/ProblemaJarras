@@ -1,12 +1,16 @@
 package modelo;
 
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class ExcepcionJarra extends Exception{
-	public ExcepcionJarra(String s) {
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
+class ExcepcionParametros extends Exception{
+	public ExcepcionParametros(String s) {
 		super(s);
 	}
 }
@@ -67,7 +71,28 @@ public class Juego {
 		return ObjA;
 	}
 
+	public void solve() {
+		this.arbolEstados.FillUntilSolve();
+	}
 	
+	public void fill() {
+		this.arbolEstados.fill();
+		
+	}
+
+	public void print() {
+		BinaryTreePrinter<EstadoJuego> btp = new BinaryTreePrinter(this.arbolEstados);
+		String s = btp.traversePreOrder(this.arbolEstados.getRaiz());
+		btp.print(System.out);
+	}
+	
+	public void printPreO() {
+		this.arbolEstados.preorden();
+	}
+	
+	public void printIno() {
+		this.arbolEstados.inorden();
+	}
 	
 	public static void jugar(String limA, String limB, String cantObj, boolean objA) {
 		Juego j = new Juego(Integer.parseInt(limA),Integer.parseInt(limB),Integer.parseInt(cantObj), objA);
@@ -77,9 +102,11 @@ public class Juego {
 	public static void jugar(int limA, int limB, int cantObj, boolean objA) {
 		Juego j = new Juego((limA),(limB),(cantObj), objA);
 		j.arbolEstados.FillUntilSolve();
+		BinaryTreePrinter<EstadoJuego> btp = new BinaryTreePrinter(j.getArbolEstados());
+		btp.print(System.out);
 	}
 	
-	public static void main(String[] args) {
+	public static Juego iniciar() throws ExcepcionParametros{
 		Scanner s = new Scanner(System.in);
 		int limA, limB, cantObj;
 		boolean objA;
@@ -94,8 +121,28 @@ public class Juego {
 		
 		System.out.println("Jarra en la que debe haber "+cantObj+"(1 o 2):");
 		objA = s.nextInt()==1;
+		if ((objA&&cantObj>limA)||(!objA&&cantObj>limB)) {
+			throw new ExcepcionParametros("No se puede conseguir una cantidad mayor al límite de la jarra como objetivo");
+		}
+		if (limA==limB && cantObj!= limA) {
+			throw new ExcepcionParametros("Es imposible conseguir la cantidad objetivo si los dos tamaños de las jarras son distintos");
+		}
 		
-		jugar(limA, limB, cantObj, objA);
+		return new Juego(limA, limB, cantObj, objA);
+	}
+	
+	public static void main(String[] args) {
+		try {
+			Juego j = iniciar();
+			j.fill();
+			JFrame v = new JFrame();
+			v.add(j.getArbolEstados().panelArbol(), BorderLayout.CENTER);
+			v.setSize(600,600);
+			v.setVisible(true);
+		}catch (ExcepcionParametros e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 	/**
