@@ -103,9 +103,12 @@ public class EstadoJuegoN implements Estado<EstadoJuegoN> {
 
 	@Override
 	public String toString() {
-		String jA = "";
-	
-		return jA;
+		String j ="";
+		Jarra[] jarras = this.juego.getJarras();
+		for(int i = 0;i<jarras.length;i++) {
+			j = j + jarras[i].toString()+"-"+this.getLevels()[i]+";";
+		}
+		return j;
 	}
 
 }
