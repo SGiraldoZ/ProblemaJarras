@@ -19,6 +19,9 @@ public class Jarra {
 		return lim;
 	}
 
+	public void setLim(int lim) {
+		this.lim = lim;
+	}
 	
 	public static void main(String[] args) {
 		Jarra j = new Jarra(3);

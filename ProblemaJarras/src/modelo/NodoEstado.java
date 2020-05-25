@@ -12,7 +12,7 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
         super(info);
     }
    
-    public void estadosSiguientes(){
+    public void estadosSiguientes1(){
         LinkedList<E> estados = this.getLlave().estadosPosibles();
         if (estados == null) return;
         Iterator<E> iter = estados.iterator();
@@ -25,6 +25,21 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
         this.setHijoIzq(separar(estados));
     }
    
+    public void estadosSiguientes() {
+    	NodoB<E> raiz = this;
+    	while(raiz.getPadre()!= null) raiz = (NodoEstado<E>)raiz.getPadre();
+    	LinkedList<E> estados = this.getLlave().estadosPosibles();
+        if (estados == null || estados.isEmpty()) return;
+        Iterator<E> iter = estados.iterator();
+        while(iter.hasNext()) {
+            E aux = iter.next();
+            if(ArbolEstados.buscarRepetido((Estado)aux, raiz)) {
+                iter.remove();
+            }
+        }
+        this.setHijoIzq(separar(estados));
+    }
+    
     public NodoEstado<E> separar(LinkedList<E> a, NodoEstado<E> hijo){
         if(!a.isEmpty()) {
             hijo.setHijoDer(new NodoEstado<E>(a.poll()));
@@ -54,12 +69,15 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
 
     @Override
     public boolean yaExiste(E llave) {
-		NodoB<E> aux = this;
-		while (aux != null) {
-			if (((E)aux.getLlave()).equals(llave)) return true;
-			aux = aux.getPadre();
+    	NodoEstado<E> aux = (NodoEstado<E>)this;
+    	while (aux!=null) {
+    		
+    		if (((E)llave).equals(((E)aux.getLlave()))) {
+				return true;
+			}
+    		aux=(NodoEstado<E>)aux.getPadre();
 		}
-		return false;
+    	return false;
 	}
     
     public static void main(String[] args){
@@ -71,7 +89,7 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
 //    	ne.getHijoIzq().estadosSiguientes();
     	
     	ArbolEstados<EstadoJuego> a = new ArbolEstados(ne);
-    	a.FillUntilSolve();
+    	a.FillUntilSolve1();
     	a.inorden();
     	System.out.println("\n");
     	a.preorden(a.getRaiz());
