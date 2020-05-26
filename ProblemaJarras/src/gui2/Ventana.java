@@ -108,8 +108,10 @@ public class Ventana extends JFrame {
 
 		// AGREGAR BOTON
 		JPanel panel2 = new JPanel();
-		actualizarArbol baa = new actualizarArbol(this);
-		panel2.add(baa);
+		actualizarArbolCompleto bac = new actualizarArbolCompleto(this);
+		actualizarArbolSolucion bas = new actualizarArbolSolucion(this);
+		panel2.add(bac);
+		panel2.add(bas);
 		panel.add(panel2, BorderLayout.SOUTH);
 
 		this.setVisible(true);
@@ -131,7 +133,7 @@ public class Ventana extends JFrame {
 		});
 	}
 
-	public void actualizarArbol() {
+	public void actualizarArbolCompleto() {
 
 		try {
 			this.paneArbol.removeAll();
@@ -152,25 +154,66 @@ public class Ventana extends JFrame {
 
 	}
 
+	public void actualizarArbolSolve() {
+
+		try {
+			this.paneArbol.removeAll();
+			JPanel tree = Juego.paneSolvedTree(Integer.parseInt(txtJarraA.getText()),
+					Integer.parseInt(txtJarraB.getText()), Integer.parseInt(txtCantObj.getText()),
+					opJarraA.isSelected());
+			tree.setPreferredSize(new Dimension(6500,900));
+			JScrollPane jsp = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			this.paneArbol.setLayout(new GridLayout(0,1));
+			this.paneArbol.add(jsp);
+			this.revalidate();
+			this.repaint();
+		} catch (ExcepcionParametros e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR EN LOS PARAMETROS", JOptionPane.WARNING_MESSAGE);
+		} catch (StackOverflowError e) {
+			JOptionPane.showMessageDialog(this,"El problema es muy grande para procesar", "ERROR EN LOS PARAMETROS", JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+	
 	public static void main(String[] args) {
 		Ventana v = new Ventana();
 
 	}
 }
 
-class actualizarArbol extends JButton {
+class actualizarArbolCompleto extends JButton {
 	private Ventana v;
 
-	public actualizarArbol(Ventana v) {
+	public actualizarArbolCompleto(Ventana v) {
 		super();
 		this.v = v;
-		this.setText("Actualizar El Árbol");
+		this.setText("Llenar el árbol de estados");
 
 		this.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				v.actualizarArbol();
+				v.actualizarArbolCompleto();
+			}
+		});
+
+	}
+}
+
+
+class actualizarArbolSolucion extends JButton {
+	private Ventana v;
+
+	public actualizarArbolSolucion(Ventana v) {
+		super();
+		this.v = v;
+		this.setText("Buscar 1 solución");
+
+		this.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				v.actualizarArbolSolve();
 			}
 		});
 

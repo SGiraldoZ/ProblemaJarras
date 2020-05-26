@@ -27,7 +27,10 @@ public class ArbolEstados<E extends Estado<E>> extends ArbolB<E> {
 		
 	}
 	
-	
+	public void solvelByLevel() {
+		LinkedList<NodoEstado<E>> lista = new LinkedList<NodoEstado<E>>();
+		lista.add((NodoEstado<E>)this.raiz);
+	}
 	//FIN METODOS SEBAS
 	
 	//METODOS MERY
@@ -125,21 +128,23 @@ public class ArbolEstados<E extends Estado<E>> extends ArbolB<E> {
 	public void fillUntilFull1(NodoEstado<E> n, LinkedList<NodoEstado<E>> solucion) {
 		if (!solucion.peekLast().llave.isSolucion()) {
 			n.estadosSiguientes1();
-			NodoEstado<E> aux = n.getHijoIzq();
+			NodoEstado<E> aux = (NodoEstado<E>) n.getHijoIzq();
 			if (aux != null) {
 				solucion.add((NodoEstado<E>) n.getHijoIzq());
 				fillUntilFull1(solucion.getLast(), solucion);
 				if (!solucion.isEmpty())solucion.removeLast();
-				if (!solucion.isEmpty() && solucion.getLast().getHijoDer() != null) {
-					solucion.add((NodoEstado<E>) n.getHijoDer());
-					fillUntilFull1((NodoEstado<E>) solucion.getLast().getHijoDer(), solucion);
-					if (!solucion.isEmpty())solucion.removeLast();
-				}
+				
 			}
-		} else {
-			mensaje(solucion);
-		}
+			if (!solucion.isEmpty() && solucion.getLast().getHijoDer() != null) {
+				solucion.add((NodoEstado<E>) n.getHijoDer());
+				fillUntilFull1((NodoEstado<E>) solucion.getLast(), solucion);
+				if (!solucion.isEmpty())solucion.removeLast();
+			}
+		} //else {
+//			mensaje(solucion);
+//		}
 	}
+	
 	
 	public void fillUntilFull1() {
 		LinkedList<NodoEstado<E>> solu= new LinkedList<NodoEstado<E>>();

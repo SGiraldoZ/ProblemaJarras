@@ -74,12 +74,12 @@ public class Juego {
 	}
 
 	public void solve() {
-		this.arbolEstados.FillUntilSolve1();
+		this.arbolEstados.FillUntilSolve();
 	}
 
 	public void fill() {
-		this.arbolEstados.fillUntilFull();
-
+		this.arbolEstados.fillUntilFull1();
+//		this.arbolEstados.fill();
 	}
 
 	public void printTree() {
@@ -150,6 +150,24 @@ public class Juego {
 		}
 		Juego j = new Juego(limA, limB, cantObj, objA);
 		j.fill();
+		return j.getArbolEstados().panelArbol();
+	}
+	
+	public static JPanel paneSolvedTree(int limA, int limB, int cantObj, boolean objA) throws ExcepcionParametros{
+		if ((objA && cantObj > limA) || (!objA && cantObj > limB)) {
+			throw new ExcepcionParametros(
+					"No se puede conseguir una cantidad mayor al límite de la jarra como objetivo");
+		}
+		if (limA == limB && cantObj != limA) {
+			throw new ExcepcionParametros(
+					"Es imposible conseguir la cantidad objetivo si los dos tamaños de las jarras son distintos");
+		}
+		if (limA%2 == 0 && limB%2 == 0 && cantObj%2==1) {
+			throw new ExcepcionParametros(
+					"Es imposible conseguir una cantidad impar si los dos tamaños de las jarras son pares");
+		}
+		Juego j = new Juego(limA, limB, cantObj, objA);
+		j.solve();
 		return j.getArbolEstados().panelArbol();
 	}
 	

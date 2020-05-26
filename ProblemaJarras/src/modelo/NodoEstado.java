@@ -18,6 +18,7 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
         Iterator<E> iter = estados.iterator();
         while(iter.hasNext()) {
             E aux = iter.next();
+//            if(this.yaExisteEstados(aux)) {
             if(this.yaExiste(aux)) {
                 iter.remove();
             }
@@ -79,6 +80,32 @@ public class NodoEstado<E extends Estado<E>> extends NodoB<E>{
 		}
     	return false;
 	}
+    
+    public boolean yaExisteEstados(E llave) {
+    	return yaExisteEstados(this, llave);
+    }
+    
+    
+    //Revisa si el estado ya existe, ignorando los "Hermanos" que vienen del mismo estado
+    private boolean yaExisteEstados(NodoEstado<E> nodo, E llave) {
+    	if (nodo == null) return false;
+    	if (this.getPadre() == null) {
+    		return ((Estado<E>)nodo.getLlave()).equals(llave);
+    	}
+    	while(nodo.getPadre()!= null && nodo.getPadre().getHijoDer() != null && nodo.getPadre().getHijoDer().equals(nodo)) {
+    		nodo = (NodoEstado<E>)nodo.getPadre();
+    	}
+    	if (((Estado<E>)nodo.getLlave()).equals(llave)) {
+    		return true;
+    	}
+    	return yaExisteEstados(nodo.getPadre(), llave);
+    }
+    
+    @Override
+    public NodoEstado<E> getPadre(){
+    	return (NodoEstado<E>)super.getPadre();
+    }
+
     
     public static void main(String[] args){
     	NodoB<Integer> n1 = new NodoB<Integer>(1);
